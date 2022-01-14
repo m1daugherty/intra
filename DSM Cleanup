@@ -1,0 +1,16 @@
+import pandas as pd
+pd.options.mode.chained_assignment = None  # default='warn'
+
+df = pd.read_csv(r'C:\Users\Miguel\Desktop\Intra\RAWDATA.csv')
+
+
+trunc_df = df[['workdate','role','userid','ponumb','jobsite','jobname','work_min','travel_min',]]
+
+trunc_df['Job Hours'] = trunc_df['work_min'] / 60
+trunc_df['Travel Hours'] = trunc_df['travel_min'] / 60
+
+final_df = trunc_df[['workdate','role','userid','Job Hours','Travel Hours', 'jobsite','jobname','ponumb']]
+
+final_df = final_df.rename(columns= {'workdate': 'Date','role':'Role','userid':'Tech','jobsite':'Jobsite','jobname':'Job Name','ponumb':'Cost Code'})
+
+final_df.to_csv(r'C:\Users\Miguel\Desktop\Intra\Output.csv', index = False)
